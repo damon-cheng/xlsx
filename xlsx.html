@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/newwjx/css/default.css?v=12" />
+    <style>
+        body {
+            min-width: auto;
+        }
+
+        select {
+            width: 114px;
+            height: 26px;
+            line-height: 20px;
+            padding: 3px 6px;
+            border: solid 1px #d5d5d5;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background: url("/images/arrow.png") no-repeat scroll right center #ffffff;
+            padding-right: 14px;
+            vertical-align: middle;
+            padding-right: 3px\0;
+            background: #ffffff\0;
+        }
+
+        .set-wrapper {
+            overflow: hidden;
+            font-size: 14px;
+            padding: 25px 30px 0;
+        }
+
+        .set-header {
+            overflow: hidden;
+        }
+
+        .import-btn {
+            width: 80px;
+            height: 25px;
+            line-height: 25px;
+            border-radius: 2px;
+        }
+
+        .step__set {
+            overflow: hidden;
+            margin-top: 14px;
+            display: -webkit-flex;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .step__set--items {
+            width: 175px \9;
+            margin-right: 10px;
+            zoom: 1;
+            flex: 1 1 auto;
+        }
+
+        .step__set .step__tit {
+            width: 100%;
+            height: 34px;
+            font-size: 13px;
+            color: #999;
+            padding: 0 12px;
+            line-height: 34px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            border: 1px solid #d7d8d9;
+            border-bottom: none;
+        }
+
+        .step__set .step__main {
+            width: 100%;
+            height: 340px;
+            line-height: 1.8;
+            font-size: 13px;
+            color: #999;
+            padding: 5px 12px;
+            background-color: #f7f8f9;
+            border: 1px solid #d7d8d9;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .step__btn {
+            text-align: center;
+        }
+
+            .step__btn .btn {
+                width: 80px;
+                height: 32px;
+                line-height: 32px;
+                font-size: 14px;
+                border-radius: 2px;
+                margin-top: 30px;
+            }
+
+        .preview-box {
+            font-size: 14px;
+            margin: 20px 30px 0;
+            line-height: 26px;
+            padding: 20px 24px;
+            border-radius: 4px;
+            background-color: #F7F8F9;
+        }
+
+        .import-box {
+            overflow: hidden;
+            display: -webkit-flex;
+            display: flex;
+        }
+
+        .method-upload-items {
+            position: relative;
+            width: 360px;
+            *width: 358px;
+            height: 160px;
+            border: 1px dashed #DBDBDB;
+            border-radius: 6px;
+            display: table;
+            float: left\9;
+        }
+
+            .method-upload-items > * {
+                display: table-cell;
+                vertical-align: middle;
+                *position: absolute;
+                *top: 30%;
+                *left: 0;
+                *right: 0;
+            }
+
+            .method-upload-items .btn-blue-solid {
+                line-height: 28px;
+                font-size: 14px;
+                width: 96px;
+                height: 30px;
+                border-radius: 4px;
+                border: 1px solid #1EA0FA;
+                background: #EAF6FF;
+                color: #1EA0FA;
+            }
+
+            .method-upload-items .btn-white-solid {
+                position: relative;
+                line-height: 28px;
+                font-size: 14px;
+                width: 96px;
+                height: 30px;
+                border-radius: 4px;
+                border: 1px solid #1EA0FA;
+                background: #1EA0FA;
+                color: #fff;
+            }
+
+        .btn-blue-solid .download-icon {
+            width: 15px;
+            height: 14px;
+            margin-top: 7px;
+            cursor: pointer;
+            background: url(/images/newimg/wjx-user-system/down@2x.png) no-repeat center;
+        }
+
+        .btn-white-solid .upload-icon {
+            width: 15px;
+            height: 14px;
+            margin-top: 7px;
+            cursor: pointer;
+            background: url(/images/newimg/wjx-user-system/up@2x.png) no-repeat center;
+        }
+
+        .a-upload input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            width: 96px;
+        }
+
+        .prompt-warp {
+            font-size: 12px;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        .back-btn {
+            position: fixed;
+            left: 50%;
+            bottom: 40px;
+            width: 80px;
+            line-height: 30px;
+            margin-left: -40px;
+        }
+
+        .layui-layer-title {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="set-wrapper">
+        <div id="manual-entry">
+            <div style="text-align: left;">
+                <%--<div style="width: 440px;">
+                <div style='color: #075db3; float: left; width: 70px; font-size: 14px;'>
+                    <b>当前题目：</b>
+                </div>
+                <span id="divTitle" style="float: left; width: 360px; padding-left: 5px;"></span>
+                <div style="clear: both;">
+                </div>
+            </div>--%>
+                <div class="set-header">
+                    <div class="pull-left">
+                        <b style="color: #666; margin-right: 10px;">选项级别</b><select id="selLevel">
+                            <option value="2">二级</option>
+                            <option value="3">三级</option>
+                            <option value="4">四级</option>
+                        </select>
+                    </div>
+                    <a href="javascript:void(0)" id="import-btn" class="pull-right btn btn-blue-frame import-btn" onclick="importFn()">批量导入</a>
+                </div>
+                <div class="step__set" id="divSet">
+                    <div class="step__set--items pull-left">
+                        <input type="text" class="step__tit inputtext" placeholder="点击输入一级名称" title="点击输入一级名称" />
+                        <textarea rows="10" cols="1" class="step__main inputtext" placeholder="一级选项内容"></textarea>
+                    </div>
+                    <div class="step__set--items pull-left">
+                        <input type="text" class="step__tit inputtext" placeholder="点击输入二级名称" title="点击输入二级名称" />
+                        <textarea rows="10" cols="1" class="step__main inputtext" placeholder="二级选项内容"></textarea>
+                    </div>
+                    <div class="step__set--items pull-left" style="display: none;">
+                        <input type="text" class="step__tit inputtext" placeholder="点击输入三级名称" title="点击输入三级名称" />
+                        <textarea rows="10" cols="1" class="step__main inputtext" placeholder="三级选项内容"></textarea>
+                    </div>
+                    <div class="step__set--items pull-left" style="display: none; margin-right: 0;">
+                        <input type="text" class="step__tit inputtext" placeholder="点击输入四级名称" title="点击输入四级名称" />
+                        <textarea rows="10" cols="1" class="step__main inputtext" placeholder="四级选项内容"></textarea>
+                    </div>
+                </div>
+                <div id="divResult" style="margin: 10px 0; color: Red;">
+                </div>
+            </div>
+            <div id="divDDl" class="preview-box" style="display: none">
+                <span style="display: inline-block; margin-right: 8px;">预览效果</span>
+                <select style="">
+                </select>
+                <select style="">
+                </select>
+                <select style="display: none;" onchange="">
+                </select>
+                <select style="display: none;" onchange="">
+                </select>
+            </div>
+            <div class="step__btn">
+                <a href="javascript:void(0)" onclick="preview();" class="btn btn-gray-frame" style="color: #808080; margin-right: 6px;">预览效果</a>
+                <input type="button" onclick="ok();" value="确定" class="btn btn-blue-solid" />
+                <div style="font-size: 14px; margin-top: 10px; color: #444;">
+                    <b>提示：</b>请按照级联格式进行设置。
+                </div>
+            </div>
+        </div>
+
+        <div id="batch-import" class="import-box" style="display: none;">
+            <div class="method-upload-items" style="margin-right: 20px;">
+                <div class="text-center">
+                    <a href="//image.wjx.cn/html/multi-dropdown-template.xlsx" class="btn btn-blue-solid">
+                        <i class="icon download-icon pull-left"></i>下载模板
+                    </a>
+                    <div class="prompt-warp text-center">需要先按模板编辑好内容，才能导入成功哦~</div>
+                </div>
+            </div>
+            <div class="method-upload-items">
+                <div class="text-center">
+                    <a href="javascript:;" class="a-upload btn btn-white-solid">
+                        <i class="icon upload-icon pull-left"></i>上传文件
+                       <input type="file" name="上传文件" id="xlf" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
+                    </a>
+                    <div class="prompt-warp text-center">后缀名为xls或者xlsx的Excel文件</div>
+                </div>
+            </div>
+            <div class="btn btn-gray-frame back-btn" id="back-btn" onclick="backFn()">返回</div>
+        </div>
+
+        <script src="/js/excel-js/shim.js" type="text/javascript"></script>
+        <script src="/js/excel-js/xlsx.full.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
+            var X = XLSX;
+            var XW = {
+                msg: 'xlsx',
+                worker: '/js/excel-js/xlsxworker.js'
+            };
+            (function () {
+                var xlf = document.getElementById('xlf');
+
+                if (!xlf.addEventListener) return;
+
+                function handleFile(e) {
+                    if (!e.target.files) {
+                        alert("您使用的浏览器版本过低，请选择IE10及其以上的浏览器");
+                        return;
+                    }
+
+                    do_file(e.target.files);
+                }
+                xlf.addEventListener('change', handleFile, false);
+            })();
+            function fixdata(data) {
+                var o = "", l = 0, w = 10240;
+                for (; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
+                o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+                return o;
+            }
+            var do_file = (function () {
+                return function do_file(files) {
+                    var f = files[0];
+                    if (f.name.indexOf(".xls") < 0) {
+                        alert("请选择.xls格式文件！");
+                        return;
+                    }
+                    var divSet = document.getElementById("divSet");
+                    var step_set_items = divSet.children;
+                    for (var i = 0; i < step_set_items.length; i++) {
+                        if (step_set_items[i].style.display == "") {
+                            var input_val = step_set_items[i].getElementsByTagName("input")[0].value;
+                            var textarea_val = step_set_items[i].getElementsByTagName("textarea")[0].value;
+                            if (textarea_val) {
+                                alert("已有数据，不能批量导入!");
+                                document.getElementById('xlf').value = null;
+                                return;
+                            }
+                        }
+                    }
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var data = e.target.result;
+                        if (rABS) {
+                            wb = X.read(data, { type: 'binary' });
+                        } else {
+                            var arr = fixdata(data);
+                            wb = X.read(btoa(arr), { type: 'base64' });
+                        }
+                        var sheetName = wb.SheetNames[0];
+                        if (!sheetName) {
+                            alert("模板错误");
+                            return;
+                        }
+                        var dataSource = X.utils.sheet_to_json(wb.Sheets[sheetName], { header: 1 });
+                        if (!dataSource || dataSource.length <= 2) {
+                            alert("导入格式有问题");
+                            return;
+                        }
+                        if (dataSource[0].length > 4) {
+                            alert("目前最多只支持4级");
+                            return;
+                        }
+                        if (dataSource[0].length < 2) {
+                            alert("导入格式有问题,最少需要两级");
+                            return;
+                        }
+
+                        var treeList = [];
+                        function isExist(item) {
+                            for (var i = 0; i < treeList.length; i++) {
+                                if (treeList[i].path == item.path && treeList[i].value == item.value && treeList[i].level == item.level) return true;
+                            }
+                            return false;
+                        }
+
+                        function filterSpecialChar(old) {
+                            return old.replace(new RegExp('|', 'g'), '');
+                        }
+
+                        function filterBr(str) {
+                            return str.replace(/[\r\n]/g, "");
+                        }
+
+                        //转为树形列表结构
+                        for (var i = 1; i < dataSource.length; i++) {
+                            var parentPathArray = [];
+                            var pathArray = [];
+                            for (var j = 0; j < dataSource[i].length; j++) {
+                                var item = {};
+                                if (j > 0) {
+                                    parentPathArray.push(trim(dataSource[i][j - 1]));
+                                }
+                                pathArray.push(filterBr(trim(dataSource[i][j])));
+                                item.value = filterSpecialChar(filterBr(trim(dataSource[i][j])));
+                                item.parent = j == 0 ? null : trim(dataSource[i][j - 1]);
+                                item.parentPath = parentPathArray.join('§');
+                                item.path = pathArray.join('§');
+                                item.level = j;
+
+                                if (!isExist(item)) {
+                                    treeList.push(item);
+                                }
+                            }
+                        }
+
+                        //获取子列表
+                        function getChildren(parent, level) {
+                            var children = [];
+                            for (var i = 0; i < treeList.length; i++) {
+                                var item = treeList[i];
+                                if (item.parentPath == parent && item.level == level) {
+                                    children.push(item);
+                                }
+                            }
+                            return children;
+                        }
+
+
+
+                        var levelTextList = [];
+                        //递归转换为级别数组
+                        function getChildTextArray(parent, level) {
+                            var items = getChildren(parent, level);
+                            for (var i = 0; i < items.length; i++) {
+                                if (!levelTextList[level]) {
+                                    levelTextList[level] = [];
+                                }
+                                if (i == 0 && level != 0) {
+                                    var replaceReg = new RegExp('§', 'g')
+                                    levelTextList[level].push("---" + items[i].parentPath.replace(replaceReg, splitChar));
+                                }
+                                levelTextList[level].push(items[i].value)
+                                getChildTextArray(items[i].path, level + 1);
+                            }
+                        }
+                        getChildTextArray('', 0);
+
+                        //操作Dom
+                        var divSet = document.getElementById("divSet");
+                        var domItems = divSet.getElementsByClassName('step__set--items');
+                        for (var i = 0; i < domItems.length; i++) {
+                            domItems[i].display = "none";
+                        }
+                        for (var i = 0; i < levelTextList.length; i++) {
+                            var domNode = domItems[i];
+                            var textAreaDom = domNode.getElementsByTagName('textarea')[0];
+                            textAreaDom.value = levelTextList[i].join('\r');
+                            var titleDom = domNode.getElementsByTagName('input')[0];
+                            titleDom.value = dataSource[0][i];
+                            domNode.display = 'block';
+                        }
+                        document.getElementById("selLevel").value = levelTextList.length;
+                        selLevel.onchange();
+                        backFn();
+                        document.getElementById('xlf').value = null;
+                    }
+                    if (rABS) reader.readAsBinaryString(f);
+                    else reader.readAsArrayBuffer(f);
+                };
+            })();
+        </script>
+
+        <script type="text/javascript">
+            String.prototype.startWith = function (str) {
+                var reg = new RegExp("^" + str);
+                return reg.test(this);
+            }
+
+            if (!Array.prototype.indexOf) {
+                Array.prototype.indexOf = function (elt /*, from*/) {
+                    var len = this.length >>> 0;
+
+                    var from = Number(arguments[1]) || 0;
+                    from = (from < 0)
+                        ? Math.ceil(from)
+                        : Math.floor(from);
+                    if (from < 0)
+                        from += len;
+
+                    for (; from < len; from++) {
+                        if (from in this && this[from] === elt)
+                            return from;
+                    }
+                    return -1;
+                };
+            }
+
+            //处理键盘事件 禁止后退键（Backspace）密码或单行、多行文本框除外      
+            function forbidBackSpace(e) {
+                var ev = e || window.event; //获取event对象         
+                var obj = ev.target || ev.srcElement; //获取事件源            
+                var t = obj.type || obj.getAttribute('type');
+                //当敲Backspace键时，事件源类型为密码或单行、多行文本的，            
+                var flag2 = ev.keyCode == 8 && t != "password" && t != "text" && t != "textarea";
+                if (flag2) return false;
+            }
+            //禁止后退键  作用于IE、Chrome      
+            document.onkeydown = forbidBackSpace;
+            var divSet = document.getElementById("divSet");
+            var txtlevels = divSet.getElementsByTagName("textarea");
+            var txtinputs = divSet.getElementsByTagName("input");
+            var isvalid = true;
+            var levelValidArray = [];
+            var cTopic = '<%=HttpUtility.JavaScriptStringEncode(Request.QueryString["ct"]) %>';
+            var curDataNode = null;
+            if (cTopic) {
+                var strTopic = cTopic + "."; if (window.parent.WjxActivity._use_self_topic) strTopic = "";
+                curDataNode = window.parent.getDataNodeByTopic(cTopic);
+                // divTitle.innerHTML = strTopic + curDataNode._title;
+            }
+            var divDDl = document.getElementById("divDDl");
+            var splitChar = "‐";
+            var ddllevels = divDDl.getElementsByTagName("select");
+            var divResult = document.getElementById("divResult");
+            var selLevel = document.getElementById("selLevel");
+            var curLevel = 2;
+
+            var specialChar = ['┌', '┍', '┎', '┏', '┐', '┑', '┒', '┓', '└', '┕', '┖', '┗', '┘', '┙', '┚', '┛', '├', '┝', '┞', '┟', '┠', '┡', '┢', '┣', '┤', '┥', '┦', '┧', '┨', '┩', '┪', '┫', '┬', '┭', '┮', '┯', '┰', '┱', '┲', '┳', '┴', '┵', '┶', '┷', '┸', '┹', '┺', '┻', '┼', '┽', '┾', '┿', '╀', '╁', '╂', '╃', '╄', '╅', '╆', '╇', 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Ц', 'Х', 'Ф', 'У', 'Т', 'С', 'Р', 'П', 'О', 'Н', 'М', 'Л', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', 'к', 'й', 'и', 'з', 'ж', 'ё', 'е', 'д', 'г', 'в', 'б', 'а', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'я', 'ю', 'э', 'ь', 'ы', 'ъ', 'щ', 'ш', 'ч', '△', '▽', '○', '◇', '□', '☆', '▷', '◁', '♤', '♡', '♢', '♧', '▲', '▼', '●', '◆', '■', '★', '▶', '◀', '♠', '♥', '♦', '♣', '☼', '☽', '♀', '☺', '◐', '☑', '√', '✔', '☜', '☝', '☞', '㏂', '☀', '☾', '♂', '☹', '◑', '☒', '×', '✘', '☚', '☟', '☛', '㏘', '•', '▪', '‥', '…', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█', '∷', '※', '░', '▒', '▓', '▏', '▎', '▍', '▌', '▋', '▊', '▉', '♩', '♪', '♫', '♬', '§', '〼', '◎', '¤', '۞', '℗', '®', '©', '♭', '♯', '♮', '‖', '¶', '卍', '卐', '▬', '〓', '℡', '™', '㏇', '☌', '☍', '☋', '☊', '㉿', '◮', '◪', '◔', '◕', '@', '㈱', '№', '♈', '♉', '♊', '♋', '♌', '♎', '♏', '♐', '♑', '♓', '♒', '♍', '↖', '↑', '↗', '▨', '▤', '▧', '◤', '㊤', '◥', '☴', '☲', '☷', '㊣', '←', '→', '▩', '▦', '▥', '㊧', '㊥', '㊨', '☳', '☯', '☱', '↙', '↓', '↘', '▫', '◈', '▣', '◣', '㊦', '◢', '☶', '☵', '☰', '↕', '↔', '⊱', '⋛', '⋌', '⋚', '⊰', '¬', '￢', '▔', '†', '‡', '*', '＊', '✲', '❈', '❉', '✿', '❀', '❃', '❁', '☸', '✖', '✚', '✪', '❤', 'ღ', '❦', '❧', 'ி', '₪', '✎', '✍', '✌', '✁', '✄', '☁', '☂', '☃', '☄', '♨', '☇', '☈', '☡', '➷', '⊹', '✉', '☏', '☢', '☣', '☠', '☭', '❂', '☪', '☮', '〄', '➹', '☩', 'ஐ', '☎', '✈', '〠', '۩', '✙', '✟', '☤', '☥', '☦', '☧', '☨', '☫', '☬', '♟', '♙', '♜', '♖', '♞', '♘', '♝', '♗', '♛', '♕', '♚', '♔'];
+
+            var parentPathMapArray = [];
+            var layerIndex;
+
+            selLevel.onchange = function () {
+                curLevel = parseInt(this.value);
+                for (var i = 0; i < 4; i++) {
+                    ddllevels[i].style.display = txtlevels[i].parentNode.style.display = i < curLevel ? "" : "none";
+                }
+            }
+            function loaddata() {
+                if (!curDataNode) return;
+                var leveldata = curDataNode._levelData || "";
+                if (!leveldata) return;
+                var levarray = leveldata.split("〒");
+                var lnames = [];
+                if (levarray[1]) lnames = levarray[1].split("|");
+                var levels = levarray[0].split("|");
+                selLevel.value = levels.length + "";
+                loadToShowValue(levels);
+                for (var i = 0; i < levels.length; i++) {
+                    //txtlevels[i].value = levels[i];
+                    txtinputs[i].value = lnames[i] || "";
+                }
+                selLevel.onchange();
+            }
+            function preview() {
+                for (var i = 0; i < txtlevels.length; i++) {
+                    txtlevels[i].onblur();
+                }
+                if (isAllValid() == false) return;
+                bindHideValue();
+                divDDl.style.display = "";
+                for (var i = 0; i < txtlevels.length; i++) {
+                    if (txtlevels[i].parentNode.style.display == "none") break;
+                    txtlevels[i].onchange();
+                }
+                Init();
+
+            }
+
+            function isAllValid() {
+                for (var i = 0; i < txtlevels.length; i++) {
+                    if (txtlevels[i].parentNode.style.display != "none" && levelValidArray[i] == false) return false;
+                }
+                return true;
+            }
+
+            function bindHideValue() {
+                for (var i = 0; i < txtlevels.length; i++) {
+                    txtlevels[i].PathForShowMapHide = [];
+                    var list = txtlevels[i].value.split("\n");
+
+                    var hideList = [];
+                    var repeatRecord = [];
+                    var level = 0;
+                    var fullPathArray = [];
+                    var prevTxt = txtlevels[i - 1];
+                    var parentPath = '';
+                    for (var j = 0; j < list.length; j++) {
+                        var line = trim(list[j]);
+                        var isParMenu = line.startWith("---");
+                        var hideLine = line;
+                        if (!isParMenu) {
+                            if (!repeatRecord[line]) {
+                                repeatRecord[line] = {};
+                                repeatRecord[line].l = level;
+                                repeatRecord[line].c = 1;
+                            }
+                            else {
+                                if (repeatRecord[line].l != level) { //跨级
+                                    repeatRecord[line].c++;
+                                }
+                            }
+                            if (repeatRecord[line].c > 1) {
+                                //hideLine = line + specialChar[repeatRecord[line].c - 2];
+                                hideLine = addSpecialTag(line, repeatRecord[line].c - 2);
+                            }
+
+                            var parentPathCur = line;
+                            if (parentPath != '') {
+                                parentPathCur = parentPath + splitChar + line;
+                            }
+
+                            fullPathArray[parentPathCur] = hideLine;
+                        }
+                        else {
+                            hideLine = line.replace('---', '');
+                            parentPath = hideLine;
+
+                            if (prevTxt && prevTxt.PathForShowMapHide && prevTxt.PathForShowMapHide[hideLine]) {
+                                hideLine = '---' + prevTxt.PathForShowMapHide[hideLine];
+                            }
+
+                            level++;
+                        }
+                        hideList.push(hideLine);
+                    }
+                    txtlevels[i].PathForShowMapHide = fullPathArray;
+
+                    //var hideList = transferHideValue(list, i);
+                    txtlevels[i].hideValue = hideList;
+                }
+            }
+
+            function isMatchSpecialChar(val) {
+                if (!val) return null;
+                if (val.indexOf('╰') > -1) return '╰';
+                if (val.indexOf('╯') > -1) return '╯';
+                if (val.indexOf('§') > -1) return '§';
+                var lastChar = val.charAt(val.length - 1);
+                var charIndex = specialChar.indexOf(lastChar);
+                if (charIndex > -1) {
+                    return lastChar;
+                }
+                return null;
+            }
+
+            function validItem(list) {
+                for (var i = 0; i < list.length; i++) {
+                    if (!list[i].startWith("---") && list[i].indexOf(splitChar) > -1) {
+                        divResult.innerHTML = "提示：文本中不能包含字符“" + splitChar + "”";
+                        return false;
+                    }
+                    if (list[i].indexOf('|') > -1) {
+                        divResult.innerHTML = "提示：文本中不能包含字符“|”";
+                        return false;
+                    }
+                    var endNoValidChar = isMatchSpecialChar(list[i]);
+                    if (endNoValidChar != null) {
+                        divResult.innerHTML = "提示：文本中不能包含字符“" + endNoValidChar + "”";
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function addSpecialTag(str, index) {
+                return str + '╰' + index + '╯';
+            }
+
+            function removeSpecialTag(str) {
+                var regE = new RegExp('╰[0-9]+╯', 'g');
+                return str.replace(regE, '');
+            }
+
+            var treeList = [];
+
+            function handleEnterChar(txt) {
+                if (!txt) return txt;
+                return txt.replace(new RegExp('\r\n', 'g'), '\n').replace(new RegExp('\r', 'g'), '\n');
+            }
+
+            function loadToShowValue(levels) {
+                var fullPathList = [];
+                for (var i = 0; i < levels.length; i++) {
+                    var txtHideValue = levels[i];
+                    txtHideValue = handleEnterChar(txtHideValue);
+                    var hideList = txtHideValue.split('\n');
+
+                    var showValueList = [];
+                    fullPathList[i] = [];
+                    var parName = '';
+                    for (var j = 0; j < hideList.length; j++) {
+                        var hideValue = hideList[j];
+                        var isParMenu = hideValue.startWith('---');
+                        var showValue = hideValue;
+                        if (isParMenu) {
+                            parName = hideValue.replace('---', '');
+                            if (fullPathList[i - 1] && fullPathList[i - 1][parName]) {
+                                parName = fullPathList[i - 1][parName];
+                            }
+                            showValue = '---' + parName;
+                        }
+                        else {
+                            var newParName = parName;
+                            if (newParName != '') {
+                                newParName += splitChar;
+                            }
+                            //var lastChar = hideValue.charAt(hideValue.length - 1);
+                            //var charIndex = specialChar.indexOf(lastChar);
+                            //if (charIndex > -1) {
+                            //    showValue = hideValue.replace(specialChar[charIndex], '');
+                            //}
+                            showValue = getShowValue(hideValue);
+                            fullPathList[i][hideValue] = newParName + showValue;
+                        }
+                        showValueList.push(showValue);
+                    }
+                    txtlevels[i].value = showValueList.join('\n');
+                    txtlevels[i].PathForHideMapShow = fullPathList[i];
+                }
+            }
+
+            function getLevelItemDataFromHideValue(hideList) {
+                var rList = [];
+                for (var i = 0; i < hideList.length; i++) {
+                    var line = trim(hideList[i]);
+                    var isParMenu = line.startWith("---");
+                    var hideLine = line;
+                    if (isParMenu) {
+                        hideLine = line.replace('---', '');
+                        if (parentPathMapArray[hideLine]) {
+                            hideLine = '---' + parentPathMapArray[hideLine];
+                        }
+                    }
+                    rList.push(hideLine);
+                }
+                return rList.join('\n');
+            }
+
+            function getShowValue(hideValue) {
+                hideValue = removeSpecialTag(hideValue);
+                if (hideValue.length <= 1) return hideValue;
+
+                var lastChar = hideValue.charAt(hideValue.length - 1);
+                var charIndex = specialChar.indexOf(lastChar);
+                if (charIndex > -1) {
+                    return hideValue.replace(specialChar[charIndex], '');
+                }
+                return hideValue;
+                //return removeSpecialTag(hideValue);
+            }
+
+            for (var i = 0; i < txtlevels.length; i++) {
+                txtlevels[i].index = i;
+                txtlevels[i].onchange = txtlevels[i].onblur = function () {
+                    var isAllValidPass = isAllValid();
+                    if (isAllValidPass) {
+                        divResult.innerHTML = "";
+                    }
+                    isvalid = true; levelValidArray[this.index] = true;
+                    var list = this.value.split("\n"); var mdata = "";
+                    var newList = new Array(); var newObj = new Object();
+                    this.levelObj = new Object(); this.levelArray = new Array(); this.levelFullPathArray = new Array();
+                    var ii = 1; var prevMenu = ""; var prevFullMenu = "";
+                    var isFirst = this.index == 0;
+                    var prevTxt = txtlevels[this.index - 1]; var newVal = "";
+                    if (prevTxt) prevTxt.levelObjArray = new Object();
+                    var curLevel = (this.index + 1 + 1) + "级";
+                    levelValidArray[this.index] = validItem(list);
+                    if (!levelValidArray[this.index]) return;
+
+                    for (var i = 0; i < list.length; i++) {
+                        var line = trim(list[i]);
+                        if (!line) continue;
+
+                        if (newVal) newVal += "\n";
+                        newVal += line;
+                        var isParMenu = line.startWith("---");
+                        if (!isParMenu) {
+                            if (!isFirst && prevMenu && prevTxt.levelObjArray[prevMenu])//添加子菜单
+                                prevTxt.levelObjArray[prevMenu].push(line);
+                            //line = line.replace("-", "—");
+
+                            this.levelArray.push(line);
+                            var fullPath = line;
+                            if (prevFullMenu != "") {
+                                fullPath = prevFullMenu + splitChar + line;
+                            }
+                            this.levelFullPathArray.push(fullPath);
+                            var ldata = "---" + fullPath;
+                            this.levelObj[fullPath] = 1;
+                            if (mdata) mdata += "\n";
+                            mdata += ldata;
+
+                            mdata += "\n" + curLevel + "选项" + (ii++) + "\n" + curLevel + "选项" + (ii++);
+
+                            continue;
+                        }
+                        else if (!isFirst) {
+                            var ldata = line.replace("---", "");
+
+                            if (txtlevels[this.index - 1].levelObj && !txtlevels[this.index - 1].levelObj[ldata]) {
+                                var msg = (this.index + 1) + "级选项中的<b>“" + line + "”</b>在" + (this.index) + "级选项中不存在！";
+                                levelValidArray[this.index] = false;
+                                divResult.innerHTML = "提示：" + msg;
+                                return;
+                            }
+                            prevMenu = ldata;
+                            prevFullMenu = ldata;
+                            prevTxt.levelObjArray[ldata] = new Array();
+                            newObj[ldata] = 1;
+                            newList.push(ldata);
+                        }
+                    }
+                    this.value = newVal;
+                    if (!isFirst) {
+                        var prevTxt = txtlevels[this.index - 1];
+                        if (prevTxt.levelFullPathArray) {
+                            for (var i = 0; i < prevTxt.levelFullPathArray.length; i++) {
+                                if (newObj[prevTxt.levelFullPathArray[i]]) continue;
+                                var msg = (prevTxt.index + 1) + "级选项中的<b>“" + prevTxt.levelFullPathArray[i] + "”</b>在" + (prevTxt.index + 1 + 1) + "级选项中不存在！";
+                                levelValidArray[this.index] = false;
+                                divResult.innerHTML = "提示：" + msg;
+                                return;
+                            }
+                        }
+                    }
+                    var nxtTxt = txtlevels[this.index + 1];
+                    //if (nxtTxt && nxtTxt.parentNode.style.display != "none") {
+                    var sameObj = new Object();
+                    for (var i = 0; i < list.length; i++) {
+                        var line = trim(list[i]);
+                        if (!line.startWith("---")) {
+                            if (sameObj[line]) {
+                                levelValidArray[this.index] = false;
+                                divResult.innerHTML = "提示：" + (this.index + 1) + "级选项中的“" + line + "”有重复项！";
+                                return;
+                            }
+                            sameObj[line] = "1";
+                        }
+                        else {
+                            sameObj = new Object();
+                        }
+                    }
+                    //}
+                    if (nxtTxt && (!nxtTxt.value || nxtTxt.value == nxtTxt.initValue) && nxtTxt.parentNode.style.display != "none") {
+
+                        nxtTxt.value = mdata;
+                        nxtTxt.initValue = mdata;
+                        nxtTxt.onchange();
+                    }
+                }
+            }
+
+            function trim(str) {
+                if (str && str.replace)
+                    return str.replace(/(^\s*)|(\s*$)/g, "");
+                else
+                    return str;
+            }
+            String.prototype.startWith = function (str) {
+                if (str == null || str == "" || this.length == 0 || str.length > this.length)
+                    return false;
+                if (this.substr(0, str.length) == str)
+                    return true;
+                return false;
+            }
+            function Init() {
+                for (var i = 0; i < ddllevels.length; i++) {
+                    ddllevels[i].index = i;
+                    ddllevels[i].txtInput = txtinputs[i];
+                    if (i == 0) {
+                        InitLevel(ddllevels[0], txtlevels[0].levelArray);
+                    }
+                    else
+                        InitLevel(ddllevels[i], []);
+                    ddllevels[i].onchange = function () {
+                        var val = this.value;
+                        var nxtddl = ddllevels[this.index + 1];
+                        if (!nxtddl) {
+                            var result = "";
+                            for (var i = 0; i < ddllevels.length; i++) {
+                                if (result) result += "-";
+                                var selectIndex = ddllevels[i].selectedIndex;
+                                result += ddllevels[i].options[selectIndex].text;
+                            }
+                            divResult.innerHTML = result;
+                            return;
+                        }
+                        if (!val) {
+                            InitLevel(nxtddl, []);
+                        }
+                        if (txtlevels[this.index].levelObjArray) {
+                            var fullValue = getSelectFullPath(this.index);
+                            var rltarray = txtlevels[this.index].levelObjArray[fullValue];
+                            if (rltarray)
+                                InitLevel(nxtddl, rltarray);
+                        }
+
+                        function getSelectFullPath(count) {
+                            var resultArray = [];
+                            for (var i = 0; i <= count; i++) {
+                                resultArray.push(ddllevels[i].value);
+                            }
+                            return resultArray.join(splitChar);
+                        }
+                    }
+                }
+            }
+
+            function InitLevel(ddllevel, levelArray, defval) {
+                ddllevel.options.length = 0;
+                var sname = ddllevel.txtInput.value || "";
+                var opt = new Option("请选择" + sname, "");
+                ddllevel.options[0] = opt;
+                for (var i = 0; i < levelArray.length; i++) {
+                    var nam = levelArray[i];
+                    var showName = getShowValue(nam);
+                    var opt = new Option(showName, nam);
+                    ddllevel.options[i + 1] = opt;
+                    if (defval && defval == nam) {
+                        opt.selected = true;
+                    }
+                }
+            }
+
+            function ok() {
+                //if (!isvalid) return;
+                for (var i = 0; i < txtlevels.length; i++) {
+                    txtlevels[i].onblur();
+                }
+                if (isAllValid() == false) return;
+                bindHideValue();
+                if (curDataNode) {
+                    var leveldata = "";
+                    for (var i = 0; i < curLevel; i++) {
+                        if (i > 0) leveldata += "|";
+                        var levelItemText = txtlevels[i].hideValue.join('\n');
+                        leveldata += levelItemText;
+                    }
+                    leveldata += "〒";
+                    for (var i = 0; i < curLevel; i++) {
+                        if (i > 0) leveldata += "|";
+                        leveldata += txtinputs[i].value;
+                    }
+
+                    curDataNode._levelData = leveldata;
+                }
+                window.parent.PDF_close();
+                //layerIndex = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                //parent.layer.close(layerIndex);
+            }
+
+
+            var batch_import = document.getElementById("batch-import");
+            var manual_entry = document.getElementById("manual-entry");
+            var import_btn = document.getElementById("import-btn");
+            function backFn() {
+                batch_import.style.display = "none";
+                manual_entry.style.display = "block";
+                //parent.layer.title("手动录入", layerIndex);
+            }
+            function importFn() {
+                batch_import.style.display = "flex";
+                manual_entry.style.display = "none";
+                // parent.layer.title("批量导入", layerIndex);
+            }
+            loaddata();
+        </script>
+    </div>
+</body>
+</html>
